@@ -81,15 +81,19 @@ public class AutoBeacRed extends LinearOpMode {
             odsReadingLinear = Math.pow(odsReadngRaw, -0.5);
             odsEstimatedDistance = (int) ((m * odsReadingLinear) + b);
 
-            if (true){
-                Avanzar(-.2);
-                while (odsEstimatedDistance < 145) {
-                    motorLeftB.setPower(0);
-                    motorLeftF.setPower(0);
-                    motorRightB.setPower(0);
-                    motorRightF.setPower(0);
-                }
+                //Avanza con velocidad de -.2 hasta que la distancia es menor a 145
+                while (odsEstimatedDistance > 145) {
+                    motorLeftB.setPower(-.2);
+                    motorLeftF.setPower(-.2);
+                    motorRightB.setPower(-.2);
+                    motorRightF.setPower(-.2);
+         
             }
+            Frenar();
+            //Aqui estoy asumiendo que calibraste el sensor para que llegue al beacon
+             PicarBeacon();
+            //Esa funcion debe detectar el color del beacon y presionar el boton correspondiente con los sensores.
+            Frenar(); 
         }
 
     }
@@ -255,7 +259,7 @@ public class AutoBeacRed extends LinearOpMode {
         NoDisparar(0);
 
         sleep(2000);
-
+           
 
     }
 }
