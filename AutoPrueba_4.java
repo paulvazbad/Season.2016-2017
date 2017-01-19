@@ -79,7 +79,7 @@ public class AutoPrueba_4 extends LinearOpMode {
         Todo(); //METODO DECLARADO ABAJO
         AvanzarHastaDistanciaX(); //EL PROBLEMA ESTA PASAR DE ESTA ORDEN A LA SIGUIENTE
         // PASAR DE "AVANZARHASTADISTACIAX" A ESTA.
-
+        PicarBeacon();
     }
 
           /*  GirarDerecha(1);
@@ -183,7 +183,11 @@ public class AutoPrueba_4 extends LinearOpMode {
     }
     //USO DE SENSORES
     public void AvanzarHastaDistanciaX() {
-        while (Multi.equals("Start")){
+         odsReadngRaw = WallSensor.getRawLightDetected();
+         odsReadingLinear = Math.pow(odsReadngRaw, -0.5);
+         odsEstimatedDistance = (int) ((m * odsReadingLinear) + b);
+        
+        while (Multi.equals("Start") && odsEstimatedDistance > 145){
             odsReadngRaw = WallSensor.getRawLightDetected();
             odsReadingLinear = Math.pow(odsReadngRaw, -0.5);
             odsEstimatedDistance = (int) ((m * odsReadingLinear) + b);
@@ -200,29 +204,29 @@ public class AutoPrueba_4 extends LinearOpMode {
                 Frenar();
             }
         }*/
-            Avanzar(-.2);
-            while (odsEstimatedDistance < 145) {
-                motorLeftB.setPower(0);
-                motorLeftF.setPower(0);
-                motorRightB.setPower(0);
-                motorRightF.setPower(0);
-                Multi = "Start2";
-                telemetry.addLine(Multi);
-                telemetry.update();
-            }
+        Avanzar(-.2);
+        }
+        motorLeftB.setPower(0);
+        motorLeftF.setPower(0);
+        motorRightB.setPower(0);
+        motorRightF.setPower(0);
+        Multi = "Start2";
+        telemetry.addLine(Multi);
+        telemetry.update();
+
             //DEBERIA PASAR A ESTA NUEVA OREDEN AL TRANSFORMAR LA VARIABLE MULTI A "START2", PERO NO
             //RESULTA ASI, EN VEZ DE ESO SE PARA A LA DISTANCIA ESTIMADA DE 145 COMO SE UESTRA ARRIBA
             // Y MANDA LA TELEMTRY START2 POR LO QUE SE QUE EL CODIGO LLEGA HASTA ESA ORDEN Y EL PROBLEMA
             //ES LA SIGUIENTE.
-            while (Multi.equals("Start2")){
-                aspas.setPower(1);
-                sleep(2000);
-                aspas.setPower(0);
-                telemetry.addLine("Logrado");
-                telemetry.update();
-            }
+        if (Multi.equals("Start2")){
+            aspas.setPower(1);
+            sleep(2000);
+            aspas.setPower(0);
+            telemetry.addLine("Logrado");
+            telemetry.update();
+            Multi = "Logrado";
         }
-    }
+      }
 
 
 
